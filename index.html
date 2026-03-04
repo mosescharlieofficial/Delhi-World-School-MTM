@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Delhi World School | Future-Ready Global Education</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .hero-overlay { background: linear-gradient(75deg, rgba(30, 58, 138, 0.9) 0%, rgba(30, 58, 138, 0.4) 100%); }
+        .glass-nav { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
+        .card-hover:hover { transform: translateY(-10px); transition: all 0.3s ease; }
+
+        /* Preloader styles */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s ease;
+        }
+        .preloader-content {
+            text-align: center;
+        }
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #1e3a8a;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Virtual Tour button enhancement */
+        .tour-btn {
+            transition: all 0.3s ease;
+        }
+        .tour-btn:hover {
+            background: rgba(255,255,255,0.2);
+            border-color: white;
+            transform: scale(1.05);
+        }
+        .tour-btn:hover i {
+            animation: pulse 1s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        /* Mobile Menu Overlay */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transform: translateX(-100%);
+            transition: transform 0.4s ease-in-out;
+        }
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+        .mobile-menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            text-align: center;
+        }
+        .mobile-menu li {
+            margin: 1.5rem 0;
+        }
+        .mobile-menu a {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1e3a8a;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: color 0.2s;
+        }
+        .mobile-menu a:hover {
+            color: #f59e0b;
+        }
+        .close-menu {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2rem;
+            color: #1e3a8a;
+            cursor: pointer;
+        }
+        /* Hide menu toggle on desktop */
+        @media (min-width: 1024px) {
+            .mobile-menu { display: none; }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-slate-900">
+
+    <!-- PRELOADER (with fallback timeout) -->
+    <div id="preloader">
+        <div class="preloader-content">
+            <img src="images/logo.jfif" alt="Delhi World School Logo" class="h-24 mx-auto mb-4">
+            <div class="spinner"></div>
+        </div>
+    </div>
+
+    <!-- Top Bar (hidden on mobile) -->
+    <div class="bg-amber-500 text-blue-950 py-2 px-6 flex justify-between items-center text-xs font-bold uppercase tracking-widest hidden md:flex">
+        <span><i class="fas fa-map-marker-alt mr-2"></i> Multiple Branches Across Hyderabad & Beyond</span>
+        <span><i class="fas fa-phone mr-2"></i> Admissions: +91 93817 98873</span>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="glass-nav sticky top-0 z-50 border-b border-gray-200 px-4 py-3 md:px-6 md:py-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-2 md:gap-3">
+                <img src="images/logo.jfif" alt="DWS Logo" class="h-10 md:h-14">
+                <!-- School name: hidden on small screens to save space, but we'll show a short version? Actually we'll keep it hidden on <640px and show only logo + hamburger -->
+                <div class="hidden sm:block">
+                    <span class="text-lg md:text-xl font-extrabold text-blue-900 whitespace-nowrap">DELHI WORLD SCHOOL, MACHILIPATNAM</span>
+                </div>
+            </div>
+            
+            <!-- Desktop Menu -->
+            <ul class="hidden lg:flex space-x-8 font-semibold text-blue-900 uppercase text-sm">
+                <li><a href="#home" class="hover:text-amber-600 transition">Home</a></li>
+                <li><a href="#about" class="hover:text-amber-600 transition">Our Vision</a></li>
+                <li><a href="#academics" class="hover:text-amber-600 transition">Academics</a></li>
+                <li><a href="#gallery" class="hover:text-amber-600 transition">Campus</a></li>
+                <li><a href="#admissions" class="bg-blue-900 text-white px-5 py-2 rounded-full hover:bg-amber-500 transition">Apply 2026-27</a></li>
+            </ul>
+            
+            <!-- Mobile Hamburger (visible below lg) -->
+            <button id="menuToggle" class="lg:hidden text-2xl text-blue-900 focus:outline-none" aria-label="Menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobileMenu" class="mobile-menu lg:hidden">
+        <div class="close-menu" id="closeMenu"><i class="fas fa-times"></i></div>
+        <ul>
+            <li><a href="#home" class="mobile-link">Home</a></li>
+            <li><a href="#about" class="mobile-link">Our Vision</a></li>
+            <li><a href="#academics" class="mobile-link">Academics</a></li>
+            <li><a href="#gallery" class="mobile-link">Campus</a></li>
+            <li><a href="#admissions" class="mobile-link">Apply 2026-27</a></li>
+        </ul>
+        <div class="absolute bottom-10 text-center text-blue-900 text-sm">
+            <i class="fas fa-phone mr-2"></i> +91 93817 98873
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative h-[70vh] md:h-[85vh] flex items-center overflow-hidden">
+        <video autoplay muted loop class="absolute w-full h-full object-cover">
+            <source src="your-video.mp4" type="video/mp4">
+        </video>
+        <div class="absolute inset-0 hero-overlay"></div>
+        
+        <div class="relative max-w-7xl mx-auto px-4 md:px-6 text-white">
+            <span class="inline-block bg-amber-500 text-blue-950 px-3 py-1 md:px-4 md:py-1 rounded-full text-xs md:text-sm font-bold mb-4 md:mb-6">NOW ACCEPTING ADMISSIONS</span>
+            <h1 class="text-4xl md:text-7xl font-extrabold mb-4 md:mb-6 leading-tight">Shaping the Leaders <br><span class="text-amber-400">of Tomorrow.</span></h1>
+            <p class="text-base md:text-xl max-w-2xl mb-6 md:mb-10 opacity-90 leading-relaxed">Delhi World School blends the prestigious CBSE curriculum with modern innovation, fostering a culture of excellence and global values.</p>
+            <div class="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                <a href="#admissions" class="bg-white text-blue-900 px-6 py-3 md:px-8 md:py-4 rounded-xl font-bold text-base md:text-lg text-center hover:bg-amber-500 hover:text-white transition shadow-2xl">Enquire Now</a>
+                <a href="https://www.youtube.com/watch?v=NwpqkyV9FK4" target="_blank" rel="noopener noreferrer" class="tour-btn border-2 border-white/50 backdrop-blur-sm px-6 py-3 md:px-8 md:py-4 rounded-xl font-bold text-base md:text-lg hover:bg-white/20 transition inline-flex items-center justify-center gap-3"><i class="fas fa-play text-amber-400"></i> Watch Virtual Tour</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About / Features -->
+    <section id="about" class="py-16 md:py-24 bg-white">
+        <div class="max-w-7xl mx-auto px-4 md:px-6">
+            <div class="text-center mb-12 md:mb-16">
+                <h2 class="text-blue-900 text-3xl md:text-4xl font-black mb-4 uppercase">Excellence by Design</h2>
+                <div class="h-1 w-20 md:w-24 bg-amber-500 mx-auto"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+                <div class="p-6 md:p-8 bg-blue-50 rounded-2xl md:rounded-3xl card-hover border border-blue-100">
+                    <i class="fas fa-microchip text-3xl md:text-4xl text-blue-900 mb-4 md:mb-6"></i>
+                    <h3 class="text-lg md:text-xl font-bold mb-2 md:mb-3">Modern Infrastructure</h3>
+                    <p class="text-sm md:text-base text-slate-600">Smart classrooms, high-tech labs, and digital libraries designed for the 21st-century learner.</p>
+                </div>
+                <div class="p-6 md:p-8 bg-amber-50 rounded-2xl md:rounded-3xl card-hover border border-amber-100">
+                    <i class="fas fa-person-swimming text-3xl md:text-4xl text-amber-600 mb-4 md:mb-6"></i>
+                    <h3 class="text-lg md:text-xl font-bold mb-2 md:mb-3">Holistic Sports</h3>
+                    <p class="text-sm md:text-base text-slate-600">From swimming to specialized cricket academies, we focus on physical health as much as mental.</p>
+                </div>
+                <div class="p-6 md:p-8 bg-blue-900 text-white rounded-2xl md:rounded-3xl shadow-xl card-hover">
+                    <i class="fas fa-award text-3xl md:text-4xl text-amber-400 mb-4 md:mb-6"></i>
+                    <h3 class="text-lg md:text-xl font-bold mb-2 md:mb-3">CBSE Excellence</h3>
+                    <p class="text-sm md:text-base opacity-80">Consistent 100% board results with a focus on competitive exams like IIT-JEE & NEET from early stages.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Admissions Section -->
+    <section id="admissions" class="py-16 md:py-24 bg-slate-900 text-white">
+        <div class="max-w-7xl mx-auto px-4 md:px-6 grid lg:grid-cols-2 gap-12 md:gap-16 items-center">
+            <div>
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 md:mb-6">Start Your Child's <br><span class="text-amber-400">Successful Journey Here.</span></h2>
+                <p class="text-slate-400 mb-6 md:mb-8 text-sm md:text-base">Admissions for the 2026-27 session are currently open for Grades Nursery to XII. Schedule a campus visit or talk to our counselor today.</p>
+                
+                <div class="space-y-4 md:space-y-6">
+                    <div class="flex gap-3 md:gap-4">
+                        <div class="h-10 w-10 md:h-12 md:w-12 rounded-full bg-blue-800 flex items-center justify-center text-lg md:text-xl"><i class="fas fa-file-download"></i></div>
+                        <div><h4 class="font-bold text-base md:text-lg">Brochure 2026</h4><p class="text-xs md:text-sm text-slate-400 underline cursor-pointer">Download Prospectus</p></div>
+                    </div>
+                    <div class="flex gap-3 md:gap-4">
+                        <div class="h-10 w-10 md:h-12 md:w-12 rounded-full bg-blue-800 flex items-center justify-center text-lg md:text-xl"><i class="fas fa-envelope"></i></div>
+                        <div><h4 class="font-bold text-base md:text-lg">Email Us</h4><p class="text-xs md:text-sm text-slate-400">info@delhiworldschool.com</p></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Admission Form -->
+            <div class="bg-white p-6 md:p-10 rounded-2xl md:rounded-3xl text-slate-900 shadow-2xl">
+                <h3 class="text-xl md:text-2xl font-bold mb-4 md:mb-6">Admission Enquiry</h3>
+                <form action="#" class="space-y-3 md:space-y-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
+                        <input type="text" placeholder="Parent's Name *" class="w-full p-3 md:p-4 bg-gray-100 rounded-xl outline-none focus:ring-2 focus:ring-amber-500 transition text-sm md:text-base" required>
+                        <input type="text" placeholder="Student's Name *" class="w-full p-3 md:p-4 bg-gray-100 rounded-xl outline-none focus:ring-2 focus:ring-amber-500 transition text-sm md:text-base" required>
+                    </div>
+                    <input type="tel" placeholder="Phone Number *" class="w-full p-3 md:p-4 bg-gray-100 rounded-xl outline-none focus:ring-2 focus:ring-amber-500 transition text-sm md:text-base" required>
+                    <input type="email" placeholder="Email Address *" class="w-full p-3 md:p-4 bg-gray-100 rounded-xl outline-none focus:ring-2 focus:ring-amber-500 transition text-sm md:text-base" required>
+                    
+                    <select class="w-full p-3 md:p-4 bg-gray-100 rounded-xl outline-none focus:ring-2 focus:ring-amber-500 transition text-sm md:text-base" required>
+                        <option value="" disabled selected>Select Grade for Admission *</option>
+                        <option>Nursery - UKG</option>
+                        <option>Grade 1 - 5</option>
+                        <option>Grade 6 - 12</option>
+                    </select>
+                    <textarea placeholder="Tell us about your child (optional)" rows="3" class="w-full p-3 md:p-4 bg-gray-100 rounded-xl outline-none focus:ring-2 focus:ring-amber-500 transition text-sm md:text-base"></textarea>
+                    <button type="submit" class="w-full bg-blue-900 text-white font-bold py-3 md:py-4 rounded-xl hover:bg-amber-600 transition shadow-lg uppercase tracking-wide text-sm md:text-base">Submit Application</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 text-white pt-12 md:pt-20 pb-6 md:pb-10 px-4 md:px-6">
+        <div class="max-w-7xl mx-auto border-b border-white/10 pb-10 md:pb-16 grid grid-cols-1 md:grid-cols-12 gap-8">
+            <!-- Column 1: Logo, Description, Socials -->
+            <div class="md:col-span-4">
+                <img src="images/logo.jfif" class="h-12 md:h-16 mb-4 md:mb-6" alt="Delhi World School Logo">
+                <p class="text-slate-400 text-sm md:text-base max-w-sm">Delhi World School is committed to creating an environment where every child is encouraged to explore their potential.</p>
+                <div class="mt-4 md:mt-6">
+                    <h4 class="font-bold mb-2 md:mb-3 text-amber-500 text-sm md:text-base">Socials</h4>
+                    <div class="flex gap-4 text-xl md:text-2xl">
+                        <a href="#"><i class="fab fa-facebook hover:text-amber-500 transition"></i></a>
+                        <a href="#"><i class="fab fa-instagram hover:text-amber-500 transition"></i></a>
+                        <a href="#"><i class="fab fa-linkedin hover:text-amber-500 transition"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Column 2: Quick Navigation -->
+            <div class="md:col-span-2">
+                <h4 class="font-bold mb-4 md:mb-6 text-amber-500 text-sm md:text-base">Quick Navigation</h4>
+                <ul class="space-y-2 md:space-y-3 text-slate-400 text-sm md:text-base">
+                    <li><a href="#" class="hover:text-white transition">Curriculum</a></li>
+                    <li><a href="#" class="hover:text-white transition">Fee Structure</a></li>
+                    <li><a href="#" class="hover:text-white transition">Careers</a></li>
+                </ul>
+            </div>
+            
+            <!-- Column 3: Policies -->
+            <div class="md:col-span-3">
+                <h4 class="font-bold mb-4 md:mb-6 text-amber-500 text-sm md:text-base">Policies</h4>
+                <ul class="space-y-2 md:space-y-3 text-slate-400 text-sm md:text-base">
+                    <li><a href="#" class="hover:text-white transition">About</a></li>
+                    <li><a href="#" class="hover:text-white transition">Terms & Conditions</a></li>
+                    <li><a href="#" class="hover:text-white transition">Privacy Policy</a></li>
+                    <li><a href="#" class="hover:text-white transition">Careers</a></li>
+                </ul>
+            </div>
+            
+            <!-- Column 4: Map -->
+            <div class="md:col-span-3">
+                <h4 class="font-bold mb-4 md:mb-6 text-amber-500 text-sm md:text-base">Location</h4>
+                <div class="relative w-full h-[180px] md:h-[200px] rounded-xl overflow-hidden border border-white/20">
+                    <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3807.123456789!2d81.087833!3d16.209222!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTbCsDEyJzMzLjIiTiA4McKwMDUnMTYuMiJF!5e0!3m2!1sen!2sin!4v1234567890" 
+                        style="position: absolute; height: 100%; width: 100%; padding: 0px; border-width: 0px; margin: 0px; left: 0px; top: 0px; touch-action: pan-x pan-y;" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+                <p class="text-xs md:text-sm text-slate-400 mt-2">16°12'33.2"N 81°05'16.2"E</p>
+            </div>
+        </div>
+        
+        <!-- Copyright -->
+        <p class="text-center pt-6 md:pt-8 text-slate-500 text-xs md:text-sm">© 2026 Delhi World School. Powered by Charlie</p>
+    </footer>
+
+    <script>
+        // Preloader hide on load + fallback timeout
+        function hidePreloader() {
+            const preloader = document.getElementById('preloader');
+            if (preloader) {
+                preloader.style.opacity = '0';
+                setTimeout(() => {
+                    preloader.style.display = 'none';
+                }, 500);
+            }
+        }
+        window.addEventListener('load', hidePreloader);
+        setTimeout(hidePreloader, 3000);
+
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const closeMenu = document.getElementById('closeMenu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        function openMenu() {
+            mobileMenu.classList.add('open');
+            document.body.style.overflow = 'hidden'; // prevent background scrolling
+        }
+        function closeMenuFunc() {
+            mobileMenu.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        if (menuToggle) {
+            menuToggle.addEventListener('click', openMenu);
+        }
+        if (closeMenu) {
+            closeMenu.addEventListener('click', closeMenuFunc);
+        }
+        // Close menu when clicking a link (smooth scroll + close)
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    closeMenuFunc(); // close menu first
+                    setTimeout(() => {
+                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                    }, 300); // slight delay to allow menu to close
+                }
+            });
+        });
+        // Close menu on outside click? Not needed since it's a full overlay.
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>
